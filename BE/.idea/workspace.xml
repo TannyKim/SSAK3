@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e27354c3-9495-477e-977f-b4e2f95c1d1f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="e27354c3-9495-477e-977f-b4e2f95c1d1f" name="Changes" comment="&quot;strap&quot;">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +35,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="2ZWNstFxixRY2M0Abfmmu3qZPfn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,7 +47,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/btcamp/SSAK3/BE",
+    "last_opened_file_path": "C:/btcamp/SSAK3/BE/src/main/java/org/ssak3/api/user",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -56,18 +59,27 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\btcamp\SSAK3\BE" />
+      <recent name="C:\btcamp\SSAK3\BE\src\main\java\org\ssak3\api\user" />
+      <recent name="C:\btcamp\SSAK3\BE\src\main\java\org\ssak3\api\ledger" />
+      <recent name="C:\btcamp\SSAK3\BE\src\main\java\org\ssak3\api" />
+      <recent name="C:\btcamp\SSAK3\BE\src\main\java\org\ssak3\api\category" />
+      <recent name="C:\btcamp\SSAK3\BE\src\main\java\org\ssak3\api\badge\service" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ssak3.Main" />
-      <module name="BE.main" />
+      <module name="ssak3.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.ssak3.*" />
           <option name="ENABLED" value="true" />
         </pattern>
+      </extension>
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
       </extension>
       <method v="2">
         <option name="Make" enabled="true" />
@@ -88,8 +100,25 @@
       <option name="presentableId" value="Default" />
       <updated>1702534088407</updated>
       <workItem from="1702534089410" duration="613000" />
-      <workItem from="1702534748664" duration="1840000" />
+      <workItem from="1702534748664" duration="2880000" />
     </task>
+    <task id="LOCAL-00001" summary="&quot;package structure&quot;">
+      <option name="closed" value="true" />
+      <created>1702536930225</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702536930225</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;strap&quot;">
+      <option name="closed" value="true" />
+      <created>1702536947213</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702536947213</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,6 +146,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;package structure&quot;" />
+    <MESSAGE value="&quot;strap&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;strap&quot;" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
