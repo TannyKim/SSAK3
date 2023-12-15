@@ -25,7 +25,6 @@ import java.util.List;
 @RequestMapping("/api/v1/ledger")
 public class LedgerController {
 
-    @Autowired
     private final LedgerService ledgerService;
 
     /** 나를 제외한 모든 사용자의 가계부 목록 조회
