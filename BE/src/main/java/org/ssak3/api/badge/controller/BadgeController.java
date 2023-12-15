@@ -24,8 +24,7 @@ import java.util.List;
 @RequestMapping("/api/v1/ledger")
 public class BadgeController {
 
-    @Autowired
-    private final BadgeService badgeService = new BadgeService();
+    private final BadgeService badgeService;
 
     @Operation(summary = "문자열 반복", description = "파라미터로 받은 문자열을 2번 반복합니다.")
     @Parameter(name = "str", description = "2번 반복할 문자열")
