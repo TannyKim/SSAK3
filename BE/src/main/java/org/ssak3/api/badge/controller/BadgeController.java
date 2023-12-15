@@ -17,28 +17,29 @@ import org.ssak3.api.badge.service.BadgeService;
 
 import java.util.List;
 
-@Tag(name = "TEST REST API", description = "TEST REST API입니다.")
+@Tag(name = "Badge REST API", description = "Badge REST API입니다.")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ledger")
 public class BadgeController {
 
+    @Autowired
     private final BadgeService badgeService;
 
-    @Operation(summary = "배지 조회", description = "배지 목록을 조회합니다.")
+    @Operation(summary = "전체 배지 목록 조회", description = "전체 배지 목록을 조회합니다.")
     @GetMapping("/badge")
     public ResponseEntity<List<OriginBadge>> originBadgeList() {
 
         List<OriginBadge> list;
         try {
-            log.info("start select badge list");
-            list = badgeService.findAllBadgeList();
+            log.info("start select origin badge list");
+            list = badgeService.findOriginBadgeList();
         } catch (Exception e) {
             log.error("error", e);
             throw new RuntimeException(e);
         }
-        log.info("badge counts: " + list.size());
+        log.info("origin badge counts: " + list.size());
 
         return new ResponseEntity<List<OriginBadge>>(list, HttpStatus.OK);
     }
