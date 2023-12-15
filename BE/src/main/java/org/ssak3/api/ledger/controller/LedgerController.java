@@ -91,7 +91,7 @@ public class LedgerController {
     }
 
     /**
-     * 기존 가계부 편집
+     * 기존 가계부 편집(수정)
      * @param ledger
      * @return
      */
