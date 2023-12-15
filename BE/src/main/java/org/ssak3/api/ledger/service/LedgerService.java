@@ -1,6 +1,6 @@
 package org.ssak3.api.ledger.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.repository.LedgerRepository;
@@ -9,12 +9,11 @@ import org.ssak3.api.ledger.repository.RecordRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class LedgerService {
 
-    @Autowired
-    private LedgerRepository ledgerRepository;
-    @Autowired
-    private RecordRepository recordRepository;
+    private final LedgerRepository ledgerRepository;
+    private final RecordRepository recordRepository;
 
     /**
      * 나를 제외한 모든 사용자의 가계부 목록 조회
@@ -29,7 +28,7 @@ public class LedgerService {
      * @return
      */
     public List<Ledger> findMyLedgerList(Long userId) {
-        return ledgerRepository.findAllByUserId(userId);
+        return ledgerRepository.findAllByUserUserId(userId);
     }
 
     /**
