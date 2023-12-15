@@ -12,4 +12,6 @@ import lombok.ToString;
 public class OriginBadge {
     private int originBadgeId;
     private String badgeName;
+
+    // ㅎㅇ
 }
