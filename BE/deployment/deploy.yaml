@@ -22,6 +22,11 @@ spec:
           env:
             - name: PORT
               value: "8080"
+          envFrom:
+            - configMapRef:
+                name: dont-give-up
+            - secretRef:
+                name: dont-give-up
           ports:
             - name: port1
               containerPort: 8081
@@ -40,7 +45,7 @@ metadata:
   name: dont-give-up
   namespace: ssak3
 data:
-  DB_SERVER: mysql-0
+  DB_SERVER: mysql
   DB_PORT: "3306"
   DB_NAME: "dontgiveup"
 ---
