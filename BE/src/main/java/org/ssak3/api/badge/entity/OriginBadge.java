@@ -17,5 +17,4 @@ public class OriginBadge {
 
     @Column(name="BADGE_NAME")
     private String badgeName;
-    // fdasfasd
 }
