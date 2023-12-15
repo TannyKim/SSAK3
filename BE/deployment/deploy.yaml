@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: v1
 kind: Deployment
 metadata:
   name: dont-give-up
@@ -32,6 +32,28 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: dont-give-up
+  namespace: ssak3
+data:
+  DB_SERVER: mysql-0
+  DB_PORT: "3306"
+  DB_NAME: "dontgiveup"
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: dont-give-up
+  namespace: ssak3
+type: Opaque
+data:
+  DB_USERNAME: c3NhY2szCg==
+  DB_PASSWORD: UEBzc3cwcmQkcg==
+
 
 ---
 
