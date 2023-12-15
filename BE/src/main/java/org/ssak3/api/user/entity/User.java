@@ -1,22 +1,22 @@
 package org.ssak3.api.user.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name="USER")
 @Getter
-@Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="USER_ID", columnDefinition="BIGINT UNSIGNED")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="USER_ID")
     private Long userId;
+
+    @Column(name="KB_PIN")
+    private String kbPIN;
 
     @Column(name="USER_NAME", columnDefinition="VARCHAR(20)")
     private String userName;
