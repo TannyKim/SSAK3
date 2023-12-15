@@ -1,22 +1,28 @@
 package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.ssak3.api.category.entity.CustomCategory;
+import org.ssak3.api.user.entity.User;
 
 @Entity
 @Table(name="RECORD")
 @Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Record {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="RECORD_ID", columnDefinition="BIGINT UNSIGNED")
     private Long recordId; // 레코드 아이디
+
+    @ManyToOne
+    @JoinColumn(name = "LEDGER_ID")
+    private Ledger ledger;
+
+    @OneToOne
+    @JoinColumn(name = "CUSTOM_CATEGORY_ID")
+    private CustomCategory customCategory;
 
     @Column(name="CATEGORY_NAME", columnDefinition="VARCHAR(50)")
     private String categoryName; // 카테고리명
