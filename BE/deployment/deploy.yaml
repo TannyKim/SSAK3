@@ -60,8 +60,8 @@ metadata:
   namespace: ssak3
 type: Opaque
 data:
-  DB_USERNAME: c3NhazMK           #echo root | base64
-  DB_PASSWORD: UEBzc3cwcmQkCg==    #echo P@ssw0rd$ | base64
+  DB_USERNAME: c3NhazM=           #echo root | base64
+  DB_PASSWORD: UEBzc3cwcmQk    #echo P@ssw0rd$ | base64
 
 ---
 
