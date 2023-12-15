@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dont-give-up
+  labels:
+    app: dont-give-up
+spec:
+  selector:
+    matchLabels:
+      app: dont-give-up
+  replicas: 1
+  template:
+    metadata:
+      name: dont-give-up
+      labels:
+        app: dont-give-up
+    spec:
+      containers:
+        - name: dont-give-up
+          image: docker.io/ktking813/dont-give-up:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - name: port1
+              containerPort: 8081
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dont-give-up
+spec:
+  type: ClusterIP
+  selector:
+    app: dont-give-up
+  ports:
+    - name: dont-give-up
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dont-give-up
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: dont-give-up.165.192.105.60.nip.io
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: dont-give-up
+                port:
+                  number: 8080
