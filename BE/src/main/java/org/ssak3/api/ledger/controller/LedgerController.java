@@ -96,7 +96,7 @@ public class LedgerController {
      * @return
      */
     @Operation(summary = "가계부 편집", description = "기존 가계부를 편집합니다.")
-    @PostMapping("/add")
+    @PostMapping("/modify")
     public ResponseEntity<Ledger> ledgerModify(@Parameter(name="ledger") Ledger ledger) {
 
         try {
@@ -116,7 +116,7 @@ public class LedgerController {
      * @return
      */
     @Operation(summary = "가계부 삭제", description = "기존 가계부를 삭제합니다.")
-    @PostMapping("/add")
+    @PostMapping("/remove")
     public void ledgerRemove(@Parameter(name="ledgerId") Long ledgerId) {
 
         try {
