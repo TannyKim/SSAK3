@@ -1,29 +1,28 @@
 package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.ssak3.api.user.entity.User;
 
 
 @Entity
 @Table(name="LEDGER")
 @Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Ledger {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="LEDGER_ID", columnDefinition="BIGINT UNSIGNED")
     private Long ledgerId; // 가계부 아이디
 
-    @Column(name="USER_ID", columnDefinition="BIGINT UNSIGNED")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-    @Column(name="THEME_ID", columnDefinition="BIGINT UNSIGNED")
-    private Long themeId;
+    @OneToOne
+    @JoinColumn(name = "THEME_ID")
+    private Theme theme;
 
     @Column(name="GOAL", columnDefinition="VARCHAR(100)")
     private String goal; // 목표 (가계부 제목)
