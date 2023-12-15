@@ -1,17 +1,20 @@
 package org.ssak3.api.badge.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
+@Table(name="ORIGIN_BADGE")
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OriginBadge {
-    private int originBadgeId;
-    private String badgeName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="ORIGIN_BADGE_ID", columnDefinition="INT UNSIGNED")
+    private Long originBadgeId;
 
-    // ㅎㅇ
+    @Column(name="BADGE_NAME")
+    private String badgeName;
 }

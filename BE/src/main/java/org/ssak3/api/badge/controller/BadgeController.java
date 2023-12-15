@@ -26,13 +26,6 @@ public class BadgeController {
 
     private final BadgeService badgeService;
 
-    @Operation(summary = "문자열 반복", description = "파라미터로 받은 문자열을 2번 반복합니다.")
-    @Parameter(name = "str", description = "2번 반복할 문자열")
-    @GetMapping("/returnStr")
-    public String returnStr(@RequestParam("id") String str) {
-        return str + "\n" + str;
-    }
-
     @Operation(summary = "배지 조회", description = "배지 목록을 조회합니다.")
     @GetMapping("/badge")
     public ResponseEntity<List<OriginBadge>> originBadgeList() {

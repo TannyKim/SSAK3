@@ -1,15 +1,16 @@
 package org.ssak3.api.badge.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
+@Table(name="GAINED_BADGE")
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GainedBadge {
-    private int gainedBadgeId;
+    @Id
+    private Long gainedBadgeId;
     private String badgeName;
 }
