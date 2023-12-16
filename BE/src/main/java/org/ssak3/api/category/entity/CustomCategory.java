@@ -1,13 +1,8 @@
 package org.ssak3.api.category.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.ssak3.api.ledger.entity.Ledger;
-import org.ssak3.api.ledger.entity.Theme;
-import org.ssak3.api.user.entity.User;
 
 @Entity
 @Table(name="CUSTOM_CATEGORY")
@@ -27,4 +22,14 @@ public class CustomCategory {
     @Column(name = "CUSTOM_CATEGORY_NAME")
     private String customCategoryName;
 
+    @Builder
+    public CustomCategory(
+            Ledger ledger,
+            String customCategoryName
+    ) {
+        this.ledger = ledger;
+        this.customCategoryName = customCategoryName;
+    }
+
 }
+
