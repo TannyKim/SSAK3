@@ -6,12 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ssak3.api.user.dto.response.UserResponse;
@@ -21,7 +18,6 @@ import org.ssak3.api.user.service.UserService;
 @Tag(name="User REST API", description = "User REST API입니다.")
 @RestController
 @RequiredArgsConstructor
-@Validated
 @RequestMapping("/api/v1/user")
 public class UserController {
 
@@ -48,7 +44,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "유저 생성 실패")
     })
     @PostMapping("/create")
-    public ResponseEntity<?> userAdd(@Valid @RequestBody boolean isNewUser) throws Exception {
+    public ResponseEntity<?> userAdd(boolean isNewUser) throws Exception {
         if (!isNewUser) {
             throw (new Exception("등록된 유저인지 확인해주세요"));
         }
