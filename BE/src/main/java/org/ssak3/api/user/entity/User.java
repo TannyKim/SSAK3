@@ -1,12 +1,14 @@
 package org.ssak3.api.user.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="USER")
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
@@ -26,5 +28,18 @@ public class User {
 
     @Column(name="INCOME", columnDefinition="BIGINT UNSIGNED")
     private Long income;
+
+    @Builder
+    public User(
+            String kbPIN,
+            String userName,
+            int age,
+            long income
+    ){
+        this.kbPIN = kbPIN;
+        this.userName = userName;
+        this.age = age;
+        this.income = income;
+    }
 
 }
