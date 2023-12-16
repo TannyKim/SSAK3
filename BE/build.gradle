@@ -100,8 +100,8 @@ tasks.named('test') {
 //    delete file(generated)
 //}
 //
-//bootJar {
-//    archivesBaseName = 'dont-give-up'
-//    archiveFileName = 'dont-give-up.jar'
-//    archiveVersion = "0.0.0"
-//}
+bootJar {
+    archivesBaseName = 'dont-give-up'
+    archiveFileName = 'dont-give-up.jar'
+    archiveVersion = "0.0.0"
+}
