@@ -1,6 +1,5 @@
 package org.ssak3.api.ledger.repository;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,4 +25,5 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long> {
      */
     List<Ledger> findAllByUserUserId(long userId);
 
+    Ledger findByLedgerId(Long ledgerId);
 }
