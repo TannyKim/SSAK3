@@ -15,7 +15,7 @@ public class CustomCategory {
     @Column(name="CUSTOM_CATEGORY_ID", columnDefinition="BIGINT UNSIGNED")
     private Long customCategoryId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "LEDGER_ID")
     private Ledger ledger;
 

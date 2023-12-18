@@ -32,7 +32,6 @@ public class RecordController {
 
     private final RecordService recordService;
 
-
     @Operation(summary = "가계부 내역 목록 조회", description = "가계부 내역 목록을 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "가계부 내역 목록 조회 성공", content = @Content(mediaType = "application/json",
