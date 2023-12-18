@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
-import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
 
@@ -27,4 +26,5 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     List<RecordMapping> findMonthlyRecordByLedgerIdAndYearAndMonth(RecordListRequest recordListRequest);
 
 
+    Record findByRecordId(Long recordId);
 }
