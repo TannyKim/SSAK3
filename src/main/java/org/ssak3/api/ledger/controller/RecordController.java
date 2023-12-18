@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ssak3.api.category.dto.response.CategoryListResponse;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
 import org.ssak3.api.ledger.dto.response.RecordEditResponse;
@@ -51,7 +50,7 @@ public class RecordController {
     @Operation(summary = "가계부 내역 수정", description = "가계부 내역을 수정합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "가계부 내역 수정 성공", content = @Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryListResponse.class)))),
+                    array = @ArraySchema(schema = @Schema(implementation = RecordEditResponse.class)))),
             @ApiResponse(responseCode = "404", description = "가계부 내역 수정 실패")
     })
     @PostMapping("/edit")
