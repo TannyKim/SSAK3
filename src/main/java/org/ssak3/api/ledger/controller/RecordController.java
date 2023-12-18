@@ -11,12 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.ssak3.api.category.dto.response.CategoryListResponse;
+import org.springframework.web.bind.annotation.*;
+import org.ssak3.api.ledger.dto.request.RecordEditRequest;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
+import org.ssak3.api.ledger.dto.response.RecordEditResponse;
 import org.ssak3.api.ledger.dto.response.RecordListResponse;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
 import org.ssak3.api.ledger.service.RecordService;
@@ -35,7 +33,7 @@ public class RecordController {
     @Operation(summary = "가계부 내역 목록 조회", description = "가계부 내역 목록을 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "가계부 내역 목록 조회 성공", content = @Content(mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryListResponse.class)))),
+                    array = @ArraySchema(schema = @Schema(implementation = RecordListResponse.class)))),
             @ApiResponse(responseCode = "404", description = "가계부 내역 목록 조회 실패")
     })
     @PostMapping("/list")
@@ -43,6 +41,30 @@ public class RecordController {
         List<RecordMapping> allRecordByYearAndMonth = recordService.findAllRecordByYearAndMonth(recordListRequest);
         RecordListResponse recordListResponse = new RecordListResponse(allRecordByYearAndMonth);
         return ResponseEntity.status(200).body(recordListResponse);
+    }
+
+    @Operation(summary = "가계부 내역 수정", description = "가계부 내역을 수정합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "가계부 내역 수정 성공", content = @Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = RecordEditResponse.class)))),
+            @ApiResponse(responseCode = "404", description = "가계부 내역 수정 실패")
+    })
+    @PostMapping("/edit")
+    public ResponseEntity<?> recordEdit(@Valid @RequestBody RecordEditRequest recordListRequest) {
+        RecordEditResponse response = recordService.modifyRecord(recordListRequest);
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @Operation(summary = "가계부 내역 삭제", description = "가계부 내역을 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "가계부 내역 삭제 성공"),
+            @ApiResponse(responseCode = "404", description = "가계부 내역 삭제 실패")
+    })
+    @DeleteMapping("")
+    public ResponseEntity<?> recordRemove(@RequestParam Long recordId) {
+        recordService.deleteRecord(recordId);
+        String result = "삭제되었습니다.";
+        return ResponseEntity.status(200).body(result);
     }
 
 

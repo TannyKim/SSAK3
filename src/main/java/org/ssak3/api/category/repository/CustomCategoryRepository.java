@@ -11,4 +11,6 @@ public interface CustomCategoryRepository extends JpaRepository<CustomCategory, 
     List<CustomCategoryMapping> findAllByLedgerLedgerId(long ledgerId);
 
     void deleteByCustomCategoryId(Long categoryId);
+
+    CustomCategory findByCustomCategoryId(Long categoryId);
 }
