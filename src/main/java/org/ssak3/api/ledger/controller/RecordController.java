@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
 import org.ssak3.api.ledger.dto.response.RecordEditResponse;
@@ -57,6 +54,18 @@ public class RecordController {
     public ResponseEntity<?> recordEdit(@Valid @RequestBody RecordEditRequest recordListRequest) {
         RecordEditResponse response = recordService.modifyRecord(recordListRequest);
         return ResponseEntity.status(200).body(response);
+    }
+
+    @Operation(summary = "가계부 내역 삭제", description = "가계부 내역을 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "가계부 내역 삭제 성공"),
+            @ApiResponse(responseCode = "404", description = "가계부 내역 삭제 실패")
+    })
+    @DeleteMapping("")
+    public ResponseEntity<?> recordRemove(@RequestParam Long recordId) {
+        recordService.deleteRecord(recordId);
+        String result = "삭제되었습니다.";
+        return ResponseEntity.status(200).body(result);
     }
 
 

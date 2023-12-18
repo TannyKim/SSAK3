@@ -2,6 +2,7 @@ package org.ssak3.api.ledger.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
@@ -37,5 +38,10 @@ public class RecordService {
 
         Record save = recordRepository.save(currRecord);
         return new RecordEditResponse(save);
+    }
+
+    @Transactional
+    public void deleteRecord(Long recordId) {
+        recordRepository.deleteByRecordId(recordId);
     }
 }
