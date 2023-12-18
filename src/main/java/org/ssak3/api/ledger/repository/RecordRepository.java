@@ -15,13 +15,13 @@ import java.util.List;
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
     /**
-     * 가계부 생성 - 테마별 결제내역 조회
+     * 테마별 결제내역 조회
      *
      * @param recordRequest
      * @return
      */
     @Query("SELECT r FROM Record r WHERE r.ledger.user.userId = :#{#recordRequest.userId} AND r.theme.themeId = :#{#recordRequest.theme.themeId} AND r.tranYmd LIKE :yearMonth%")
-    RecordResponse findAllByUserIdAndThemeIdAndYearMonth(RecordRequest recordRequest);
+    List<Record> findAllByUserIdAndThemeIdAndYearMonth(RecordRequest recordRequest);
 
     @Query("SELECT r FROM Record r WHERE r.ledger.ledgerId = :#{#recordListRequest.ledgerId} AND r.tranYmd LIKE :#{#recordListRequest.yearMonth}%")
     List<RecordMapping> findMonthlyRecordByLedgerIdAndYearAndMonth(RecordListRequest recordListRequest);

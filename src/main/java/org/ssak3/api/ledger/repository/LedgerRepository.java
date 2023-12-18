@@ -16,7 +16,7 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long> {
      * @return
      */
     @Query("SELECT l FROM Ledger l WHERE l.user.userId != :userId")
-    List<Ledger> findOthersLedgerList(long userId);
+    List<Ledger> findOthersLedgerList(Long userId);
 
     /**
      * 나의 가계부 목록 조회
