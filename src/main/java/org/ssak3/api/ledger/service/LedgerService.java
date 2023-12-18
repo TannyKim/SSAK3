@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
 import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Ledger;
+import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.repository.LedgerRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
@@ -30,12 +31,12 @@ public class LedgerService {
     }
 
     /**
-     * 가계부 생성 - 테마별 결제내역 조회
+     * 테마별 결제내역 조회
      *
      * @param recordRequest
      * @return
      */
-    public RecordResponse findRecordList(RecordRequest recordRequest) {
+    public List<Record> findRecordList(RecordRequest recordRequest) {
         return recordRepository.findAllByUserIdAndThemeIdAndYearMonth(recordRequest);
     }
 
@@ -70,21 +71,19 @@ public class LedgerService {
     }
 
     /**
+     * 나의 가계부 목록 조회
+     *
+     * @return
+     */
+    public List<Ledger> findMyLedgerList(Long userId) { return ledgerRepository.findAllByUserUserId(userId); }
+
+    /**
      * 나를 제외한 모든 사용자의 가계부 목록 조회
      *
      * @return
      */
     public List<Ledger> findOthersLedgerList(Long userId) {
         return ledgerRepository.findOthersLedgerList(userId);
-    }
-
-    /**
-     * 나의 가계부 목록 조회
-     *
-     * @return
-     */
-    public List<Ledger> findMyLedgerList(Long userId) {
-        return ledgerRepository.findAllByUserUserId(userId);
     }
 
 }

@@ -7,6 +7,8 @@ import org.ssak3.api.ledger.dto.request.RecordRequest;
 import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Record;
 
+import java.util.List;
+
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
@@ -17,5 +19,5 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
      * @return
      */
     @Query("SELECT r FROM Record r WHERE r.ledger.user.userId = :#{#recordRequest.userId} AND r.theme.themeId = :#{#recordRequest.theme.themeId} AND r.tranYmd LIKE :yearMonth%")
-    RecordResponse findAllByUserIdAndThemeIdAndYearMonth(RecordRequest recordRequest);
+    List<Record> findAllByUserIdAndThemeIdAndYearMonth(RecordRequest recordRequest);
 }

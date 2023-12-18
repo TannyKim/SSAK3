@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
 import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Ledger;
+import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.service.LedgerService;
 
@@ -27,12 +28,12 @@ public class LedgerController {
     private final LedgerService ledgerService;
 
     /**
-     * 가계부 생성 - 테마 목록 조회
+     * 테마 목록 조회
      *
      * @return
      */
     @Operation(summary = "테마 목록 조회", description = "테마 목록을 조회합니다.")
-    @GetMapping("/theme-list")
+    @GetMapping("/theme/list")
     public ResponseEntity<?> themeList() {
 
         List<Theme> themeList;
@@ -48,25 +49,22 @@ public class LedgerController {
     }
 
     /**
-     * 가계부 생성 - 테마별 결제내역 조회
+     * 전월 지출 합산 금액 조회
      *
      * @param recordRequest
      * @return
      */
-    @Operation(summary = "테마 선택", description = "가계부의 테마를 선택합니다.")
-    @GetMapping("/theme")
+    @Operation(summary = "전월 지출 합산 금액 조회", description = "가계부의 테마를 선택하면 해당 테마의 결제내역을 조회하여 전월 지출을 합산합니다.")
+    @GetMapping("/theme/add")
     public ResponseEntity<?> themeAdd(@Valid @RequestBody RecordRequest recordRequest) {
 
+        List<Record> recordList;
         RecordResponse recordResponse = new RecordResponse();
 
         try {
             log.info("start select record list");
-            recordResponse = ledgerService.findRecordList(recordRequest);
-//            recordResponse.setMonthExpense(recordResponse.getRecordList()
-//                    .stream()
-//                    .mapToInt(Record::getTranAmount)
-//                    .sum());
-
+            recordList = ledgerService.findRecordList(recordRequest);
+            recordResponse.setMonthExpense(recordList.stream().mapToInt(Record::getTranAmount).sum());
         } catch (Exception e) {
             log.error("error", e);
             throw new RuntimeException(e);
@@ -83,7 +81,7 @@ public class LedgerController {
      */
     @Operation(summary = "가계부 생성", description = "새로운 가계부를 생성합니다.")
     @PostMapping("/add")
-    public ResponseEntity<?> ledgerAdd(@Parameter(name = "ledger") Ledger ledger) {
+    public ResponseEntity<?> ledgerAdd(@Valid @RequestBody Ledger ledger) {
 
         try {
             log.info("start insert new ledger");
@@ -97,14 +95,14 @@ public class LedgerController {
     }
 
     /**
-     * 기존 가계부 편집(수정)
+     * 기존 가계부 편집
      *
      * @param ledger
      * @return
      */
     @Operation(summary = "가계부 편집", description = "기존 가계부를 편집합니다.")
     @PostMapping("/modify")
-    public ResponseEntity<?> ledgerModify(@Parameter(name = "ledger") Ledger ledger) {
+    public ResponseEntity<?> ledgerModify(@Valid @RequestBody Ledger ledger) {
 
         try {
             log.info("start update my ledger");
@@ -166,7 +164,7 @@ public class LedgerController {
      */
     @Operation(summary = "전체 가계부 목록 조회", description = "나를 제외한 모든 사용자의 가계부 목록을 조회합니다.")
     @GetMapping("/others-list")
-    public ResponseEntity<?> othersLedgerList(@Parameter(name = "userId") Long userId) {
+    public ResponseEntity<?> othersLedgerList(Long userId) {
 
         List<Ledger> list;
         try {

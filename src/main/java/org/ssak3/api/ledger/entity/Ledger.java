@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.ssak3.api.user.entity.User;
 
 
 @Entity
 @Table(name = "LEDGER")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Ledger {
 
@@ -22,7 +24,7 @@ public class Ledger {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 

@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class LedgerResponse {
 
-    @Schema(description = "my ledger list")
-    List<Ledger> myLedgerList;
+    @Schema(description = "ledger list")
+    List<Ledger> ledgerList;
 
     @Schema(description = "theme list")
     List<Theme> themeList;

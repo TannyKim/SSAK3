@@ -25,7 +25,7 @@ public class Record {
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "CUSTOM_CATEGORY_ID")
     private CustomCategory customCategory;
 

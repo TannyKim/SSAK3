@@ -22,5 +22,5 @@ public class RecordResponse {
     List<Record> recordList;
 
     @Schema(description = "month expense")
-    Integer monthExpense; // 월 지출 합산
+    Integer monthExpense; // 월 지출 합산 금액
 }
