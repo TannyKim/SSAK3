@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.ssak3.api.user.dto.response.UserResponse;
 import org.ssak3.api.user.entity.User;
@@ -29,7 +30,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "유저 조회 실패")
     })
     @PostMapping("")
-    public ResponseEntity<?> userById(Long userId) throws Exception {
+    public ResponseEntity<?> userById(@RequestParam Long userId) throws Exception {
         User user = userService.findUserById(userId);
         if (user == null) {
             throw (new Exception("유저 아이디를 확인해주세요"));
@@ -44,7 +45,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "유저 생성 실패")
     })
     @PostMapping("/create")
-    public ResponseEntity<?> userAdd(boolean isNewUser) throws Exception {
+    public ResponseEntity<?> userAdd(@RequestParam boolean isNewUser) throws Exception {
         if (!isNewUser) {
             throw (new Exception("등록된 유저인지 확인해주세요"));
         }

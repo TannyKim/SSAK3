@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 public class RecordRequest {
@@ -15,5 +17,5 @@ public class RecordRequest {
     String themeId;
 
     @Schema(description = "year and month", example = "2023-12")
-    String yearMonth;
+    LocalDateTime localDateTime;
 }

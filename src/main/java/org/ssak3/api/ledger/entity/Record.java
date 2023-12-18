@@ -25,7 +25,7 @@ public class Record {
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "CUSTOM_CATEGORY_ID")
     private CustomCategory customCategory;
 
@@ -46,4 +46,7 @@ public class Record {
 
     @Column(name = "TRAN_PLACE", columnDefinition = "VARCHAR(50)")
     private String tranPlace; // 상호명
+
+    @Column(name = "IS_EXPENSE", columnDefinition = "VARCHAR(1)")
+    private String isExpense;
 }

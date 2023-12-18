@@ -34,7 +34,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "카테고리 조회 실패")
     })
     @PostMapping("")
-    public ResponseEntity<?> category(Long ledgerId) throws Exception {
+    public ResponseEntity<?> category(@RequestParam Long ledgerId) throws Exception {
         CategoryListResponse categoryList = categoryService.getCategoryList(ledgerId);
         return ResponseEntity.status(200).body(categoryList);
     }
@@ -45,7 +45,7 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "카테고리 삭제 실패")
     })
     @DeleteMapping("{categoryId}")
-    public ResponseEntity<?> categoryRemove(Long categoryId) throws Exception {
+    public ResponseEntity<?> categoryRemove(@RequestParam Long categoryId) throws Exception {
         categoryService.removeCategory(categoryId);
         String result = "삭제되었습니다.";
         return ResponseEntity.status(200).body(result);
