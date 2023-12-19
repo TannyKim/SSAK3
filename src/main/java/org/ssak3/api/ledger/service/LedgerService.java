@@ -63,6 +63,7 @@ public class LedgerService {
         List<CustomCategory> customCategoryList = originCategoryList.stream()
                 .map(originCategory -> { return new CustomCategory(newLedger, originCategory.getOriginCategoryName()); })
                 .collect(Collectors.toList());
+        System.out.println(customCategoryList.toString());
         customCategoryRepository.saveAll(customCategoryList);
         return newLedger;
     }

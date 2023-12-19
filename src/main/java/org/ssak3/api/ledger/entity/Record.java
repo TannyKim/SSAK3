@@ -3,6 +3,8 @@ package org.ssak3.api.ledger.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.ssak3.api.category.entity.CustomCategory;
 
 @Entity
@@ -19,6 +21,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "LEDGER_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ledger ledger;
 
     @ManyToOne
@@ -27,6 +30,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "CUSTOM_CATEGORY_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private CustomCategory customCategory;
 
     @Column(name = "CATEGORY_NAME", columnDefinition = "VARCHAR(50)")
