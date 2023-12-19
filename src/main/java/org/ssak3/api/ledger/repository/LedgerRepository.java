@@ -23,7 +23,7 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long> {
      * @param userId
      * @return
      */
-    List<Ledger> findAllByUserUserId(long userId);
+    List<Ledger> findAllByUserUserId(Long userId);
 
     Ledger findByLedgerId(Long ledgerId);
 }
