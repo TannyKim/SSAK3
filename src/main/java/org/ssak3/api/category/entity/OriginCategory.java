@@ -17,7 +17,7 @@ public class OriginCategory {
     @Column(name="ORIGIN_CATEGORY_ID", columnDefinition="BIGINT UNSIGNED")
     private Long originCategoryId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 }
