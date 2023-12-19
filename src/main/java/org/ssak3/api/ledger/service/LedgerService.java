@@ -9,7 +9,7 @@ import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.entity.OriginCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.category.repository.OriginCategoryRepository;
-import org.ssak3.api.ledger.dto.request.RecordRequest;
+import org.ssak3.api.ledger.dto.response.PreMonthExpenseResponse;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.entity.MyData;
 import org.ssak3.api.ledger.entity.Record;
@@ -47,11 +47,20 @@ public class LedgerService {
     /**
      * 테마별 결제내역 조회
      *
-     * @param recordRequest
+     * @param themeId
      * @return
      */
-    public List<Record> findRecordList(RecordRequest recordRequest) {
-        return recordRepository.findAllByUserIdAndThemeIdAndYearMonth(recordRequest);
+    public PreMonthExpenseResponse findPreMonthExpense(long themeId, String yearMonth) {
+        List<MyData> myDataList;
+        if (themeId == 1) myDataList = myDataRepository.findByTranYmd(yearMonth);
+        else myDataList = myDataRepository.findByThemeThemeIdAndTranYmd(themeId, yearMonth);
+        int expense = 0;
+        for (MyData myData : myDataList) {
+            expense += myData.getTranAmount();
+        }
+        PreMonthExpenseResponse preMonthExpenseResponse = new PreMonthExpenseResponse(themeId, expense);
+        return preMonthExpenseResponse;
+//        return recordRepository.findAllByUserIdAndThemeIdAndYearMonth(recordRequest);
     }
 
     /**

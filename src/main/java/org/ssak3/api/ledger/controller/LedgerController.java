@@ -6,13 +6,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ssak3.api.ledger.dto.request.RecordRequest;
-import org.ssak3.api.ledger.dto.response.RecordResponse;
+import org.ssak3.api.ledger.dto.response.PreMonthExpenseResponse;
 import org.ssak3.api.ledger.entity.Ledger;
-import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.service.LedgerService;
 
@@ -51,26 +50,29 @@ public class LedgerController {
     /**
      * 전월 지출 합산 금액 조회
      *
-     * @param recordRequest
+     * @param themeId
      * @return
      */
     @Operation(summary = "전월 지출 합산 금액 조회", description = "가계부의 테마를 선택하면 해당 테마의 결제내역을 조회하여 전월 지출을 합산합니다.")
-    @GetMapping("/theme/add")
-    public ResponseEntity<?> themeAdd(@Valid @RequestBody RecordRequest recordRequest) {
+    @GetMapping("/theme/add/preMonthExpense")
+    public ResponseEntity<?> preMonthExpense(@Param(value = "themeId") Long themeId, @Param(value = "yearMonth") String yearMonth) {
 
-        List<Record> recordList;
-        RecordResponse recordResponse = new RecordResponse();
+        PreMonthExpenseResponse recordResponse = new PreMonthExpenseResponse();
+        PreMonthExpenseResponse preMonthExpense;
 
         try {
             log.info("start select record list");
-            recordList = ledgerService.findRecordList(recordRequest);
-            recordResponse.setMonthExpense(recordList.stream().mapToInt(Record::getTranAmount).sum());
+            preMonthExpense = ledgerService.findPreMonthExpense(themeId, yearMonth);
+//            recordList = ledgerService.findRecordList(recordRequest);
+//            recordResponse.setMonthExpense(recordList.stream().mapToInt(Record::getTranAmount).sum());
+
         } catch (Exception e) {
+
             log.error("error", e);
             throw new RuntimeException(e);
         }
 
-        return new ResponseEntity<RecordResponse>(recordResponse, HttpStatus.OK);
+        return ResponseEntity.status(200).body(preMonthExpense);
     }
 
     /**
