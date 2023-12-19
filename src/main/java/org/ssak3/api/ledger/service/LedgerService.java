@@ -41,8 +41,10 @@ public class LedgerService {
      * @param themeId
      * @return
      */
-    public PreMonthExpenseResponse findPreMonthExpense(Long themeId, String yearMonth) {
-        List<MyData> myDataList = myDataRepository.findByThemeThemeIdAndTranYmd(themeId, yearMonth);
+    public PreMonthExpenseResponse findPreMonthExpense(long themeId, String yearMonth) {
+        List<MyData> myDataList;
+        if (themeId == 1) myDataList = myDataRepository.findByTranYmd(yearMonth);
+        else myDataList = myDataRepository.findByThemeThemeIdAndTranYmd(themeId, yearMonth);
         int expense = 0;
         for (MyData myData : myDataList) {
             expense += myData.getTranAmount();
