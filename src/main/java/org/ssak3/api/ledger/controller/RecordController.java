@@ -62,7 +62,7 @@ public class RecordController {
             @ApiResponse(responseCode = "404", description = "가계부 내역 삭제 실패")
     })
     @DeleteMapping("")
-    public ResponseEntity<?> recordRemove(@RequestParam Long recordId) {
+    public ResponseEntity<?> recordRemove(@RequestParam(value = "recordId") Long recordId) {
         recordService.deleteRecord(recordId);
         String result = "삭제되었습니다.";
         return ResponseEntity.status(200).body(result);

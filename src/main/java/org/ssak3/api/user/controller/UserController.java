@@ -30,7 +30,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "유저 조회 실패")
     })
     @PostMapping("")
-    public ResponseEntity<?> userById(@RequestParam Long userId) throws Exception {
+    public ResponseEntity<?> userById(@RequestParam(value = "userId") Long userId) throws Exception {
         User user = userService.findUserById(userId);
         if (user == null) {
             throw (new Exception("유저 아이디를 확인해주세요"));
@@ -45,7 +45,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "유저 생성 실패")
     })
     @PostMapping("/create")
-    public ResponseEntity<?> userAdd(@RequestParam boolean isNewUser) throws Exception {
+    public ResponseEntity<?> userAdd(@RequestParam(value = "isNewUser") boolean isNewUser) throws Exception {
         if (!isNewUser) {
             throw (new Exception("등록된 유저인지 확인해주세요"));
         }
