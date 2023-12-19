@@ -22,9 +22,6 @@ public class MyData {
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
-    @Column(name = "TRAN_NAME", columnDefinition = "VARCHAR(50)")
-    private String tranName; // 거래명
-
     @Column(name = "TRAN_AMOUNT", columnDefinition = "INT UNSIGNED")
     private int tranAmount; // 거래금액
 
