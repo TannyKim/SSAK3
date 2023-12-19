@@ -5,22 +5,21 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.ssak3.api.ledger.entity.Theme;
-
-import java.util.List;
 
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecordResponse {
+public class PreMonthExpenseResponse {
 
     @Schema(description = "theme")
-    Theme theme;
-
-    @Schema(description = "record list")
-    List<Record> recordList;
+    long themeId;
 
     @Schema(description = "month expense")
     Integer monthExpense; // 월 지출 합산 금액
+
+    public PreMonthExpenseResponse(long themeId, int expense) {
+        this.themeId = themeId;
+        this.monthExpense = expense;
+    }
 }
