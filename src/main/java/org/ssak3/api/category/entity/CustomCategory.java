@@ -2,6 +2,8 @@ package org.ssak3.api.category.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.ssak3.api.ledger.entity.Ledger;
 
 @Entity
@@ -15,8 +17,9 @@ public class CustomCategory {
     @Column(name="CUSTOM_CATEGORY_ID", columnDefinition="BIGINT UNSIGNED")
     private Long customCategoryId;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LEDGER_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ledger ledger;
 
     @Column(name = "CUSTOM_CATEGORY_NAME")

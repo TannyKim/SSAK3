@@ -1,6 +1,7 @@
 package org.ssak3.api.ledger.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
@@ -15,6 +16,8 @@ import org.ssak3.api.ledger.repository.ThemeRepository;
 import java.util.List;
 
 @Service
+@Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class LedgerService {
 

@@ -20,11 +20,11 @@ public class Ledger {
     @Column(name = "LEDGER_ID", columnDefinition = "BIGINT UNSIGNED")
     private Long ledgerId; // 가계부 아이디
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
