@@ -2,14 +2,17 @@ package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.ssak3.api.category.entity.CustomCategory;
 
 @Entity
 @Table(name = "RECORD")
 @Getter
 @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Record {
 
     @Id
@@ -19,6 +22,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "LEDGER_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ledger ledger;
 
     @ManyToOne
@@ -27,6 +31,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "CUSTOM_CATEGORY_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private CustomCategory customCategory;
 
     @Column(name = "CATEGORY_NAME", columnDefinition = "VARCHAR(50)")
@@ -48,5 +53,5 @@ public class Record {
     private String tranPlace; // 상호명
 
     @Column(name = "IS_EXPENSE", columnDefinition = "VARCHAR(1)")
-    private String isExpense;
+    private String isExpense; // 지출 or 수입
 }

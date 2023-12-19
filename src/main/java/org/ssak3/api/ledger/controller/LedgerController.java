@@ -143,7 +143,7 @@ public class LedgerController {
      */
     @Operation(summary = "나의 가계부 목록 조회", description = "나의 가계부 목록을 조회합니다.")
     @GetMapping("/my-list")
-    public ResponseEntity<?> myLedgerList(@Parameter(name = "userId") Long userId) {
+    public ResponseEntity<?> myLedgerList(Long userId) {
 
         List<Ledger> list;
         try {

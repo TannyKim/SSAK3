@@ -10,6 +10,7 @@ import org.ssak3.api.ledger.entity.Ledger;
 @Table(name="CUSTOM_CATEGORY")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class CustomCategory {
 
