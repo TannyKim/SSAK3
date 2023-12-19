@@ -19,7 +19,7 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
      * @param recordRequest
      * @return
      */
-    @Query("SELECT r FROM Record r WHERE r.ledger.user.userId = :#{#recordRequest.userId} AND r.theme.themeId = :#{#recordRequest.theme.themeId} AND r.tranYmd LIKE :yearMonth%")
+    @Query("SELECT r FROM Record r WHERE r.ledger.user.userId = :#{#recordRequest.userId} AND r.theme.themeId = :#{#recordRequest.themeId} AND r.tranYmd LIKE :#{#recordRequest.yearMonth}%")
     List<Record> findAllByUserIdAndThemeIdAndYearMonth(RecordRequest recordRequest);
 
     @Query("SELECT r FROM Record r WHERE r.ledger.ledgerId = :#{#recordListRequest.ledgerId} AND r.tranYmd LIKE :#{#recordListRequest.yearMonth}%")

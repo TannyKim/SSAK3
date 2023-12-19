@@ -122,7 +122,7 @@ public class LedgerController {
      * @return
      */
     @Operation(summary = "가계부 삭제", description = "기존 가계부를 삭제합니다.")
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     public void ledgerRemove(@Parameter(name = "ledgerId") Long ledgerId) {
 
         try {
@@ -159,7 +159,7 @@ public class LedgerController {
 
     /**
      * 나를 제외한 모든 사용자의 가계부 목록 조회
-     *
+     * @param userId
      * @return
      */
     @Operation(summary = "전체 가계부 목록 조회", description = "나를 제외한 모든 사용자의 가계부 목록을 조회합니다.")

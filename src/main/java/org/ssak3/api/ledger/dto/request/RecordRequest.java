@@ -13,9 +13,9 @@ public class RecordRequest {
     @Schema(description = "user id", example = "1")
     String userId;
 
-    @Schema(description = "theme id")
+    @Schema(description = "theme id", example = "1")
     String themeId;
 
-    @Schema(description = "year and month", example = "2023-12")
-    LocalDateTime localDateTime;
+    @Schema(description = "last year and month", example = "2023-11")
+    String yearMonth;
 }
