@@ -2,6 +2,7 @@ package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,7 +12,7 @@ import org.ssak3.api.category.entity.CustomCategory;
 @Table(name = "RECORD")
 @Getter
 @Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Record {
 
     @Id
@@ -52,5 +53,5 @@ public class Record {
     private String tranPlace; // 상호명
 
     @Column(name = "IS_EXPENSE", columnDefinition = "VARCHAR(1)")
-    private String isExpense;
+    private String isExpense; // 지출 or 수입
 }

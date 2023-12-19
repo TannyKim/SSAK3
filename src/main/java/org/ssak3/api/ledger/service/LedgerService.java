@@ -11,9 +11,11 @@ import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.category.repository.OriginCategoryRepository;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
 import org.ssak3.api.ledger.entity.Ledger;
+import org.ssak3.api.ledger.entity.MyData;
 import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.repository.LedgerRepository;
+import org.ssak3.api.ledger.repository.MyDataRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.ThemeRepository;
 
@@ -31,6 +33,7 @@ public class LedgerService {
     private final ThemeRepository themeRepository;
     private final CustomCategoryRepository customCategoryRepository;
     private final OriginCategoryRepository originCategoryRepository;
+    private final MyDataRepository myDataRepository;
 
     /**
      * 테마 목록 조회
@@ -58,13 +61,44 @@ public class LedgerService {
      * @return
      */
     public Ledger addLedger(Ledger ledger) {
+        // Create New Ledger
         Ledger newLedger = ledgerRepository.save(ledger);
-        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(newLedger.getTheme().getThemeId());
+
+        Long themeId = newLedger.getTheme().getThemeId();
+
+        // OriginCategory -> CustomCategory
+        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(themeId);
         List<CustomCategory> customCategoryList = originCategoryList.stream()
                 .map(originCategory -> { return new CustomCategory(newLedger, originCategory.getOriginCategoryName()); })
                 .collect(Collectors.toList());
-        System.out.println(customCategoryList.toString());
         customCategoryRepository.saveAll(customCategoryList);
+
+        // MyData -> Record
+        List<MyData> myDataList;
+        if (themeId == 1) {
+            myDataList = myDataRepository.findAll();
+        } else {
+            myDataList = myDataRepository.findAllByThemeThemeId(themeId);
+        }
+        CustomCategory customCategory = customCategoryRepository.findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(newLedger.getLedgerId()).get(0);
+        List<Record> recordList = myDataList.stream()
+                .map(myData -> {
+                    Record record = new Record();
+                    record.setLedger(newLedger); // 가계부
+                    record.setTheme(myData.getTheme()); // 테마
+                    record.setCustomCategory(customCategory); // 카테고리
+                    record.setCategoryName(customCategory.getCustomCategoryName()); // 카테고리명
+                    record.setTranName(myData.getTranPlace()); // 거래명
+                    record.setTranAmount(myData.getTranAmount()); // 거래금액
+                    record.setTranYmd(myData.getTranYmd()); // 거래년월일
+                    record.setTranTime(myData.getTranTime()); // 거래시각
+                    record.setTranPlace(myData.getTranPlace()); // 상호명
+                    record.setIsExpense(myData.getIsExpense()); // 지출 or 수입
+                    return record;
+                })
+                .collect(Collectors.toList());
+        recordRepository.saveAll(recordList);
+
         return newLedger;
     }
 
