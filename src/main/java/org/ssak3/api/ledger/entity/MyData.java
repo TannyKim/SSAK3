@@ -35,5 +35,5 @@ public class MyData {
     private String tranPlace; // 상호명
 
     @Column(name = "IS_EXPENSE", columnDefinition = "VARCHAR(1)")
-    private String isExpense; // 수입 지출 여부
+    private String isExpense; // 지출 or 수입
 }
