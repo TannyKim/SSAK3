@@ -7,6 +7,14 @@ spring:
   application:
     name: dontgiveup
 
+  servlet:
+    multipart:
+      enabled: true # 멀티파트 업로드 지원여부 (default: true)
+      file-size-threshold: 0B # 파일을 디스크에 저장하지 않고 메모리에 저장하는 최소 크기 (default: 0B)
+      location: /users/charming/temp # 업로드된 파일이 임시로 저장되는 디스크 위치 (default: WAS가 결정)
+      max-file-size: 100MB # 한개 파일의 최대 사이즈 (default: 1MB)
+      max-request-size: 100MB # 한개 요청의 최대 사이즈 (default: 10MB)
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_SERVER:165.192.105.57}:${DB_PORT:30500}/${DB_NAME:dontgiveup}?useUnicode=true&characterEncoding=utf-8
@@ -34,6 +42,19 @@ spring:
       pathmatch:
         matching-strategy: ant_path_matcher
 
+    cloud:
+      aws:
+        s3:
+          bucket: ssak3
+        credentials:
+          access-key: AKIAZL4TEKTNBS6FS4FH
+          secret-key: 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
+        region:
+          static: ap-northeast-2
+          auto: false
+        stack:
+          auto: false
+
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
@@ -52,3 +73,10 @@ springdoc:
   default-produces-media-type: application/json;charset=UTF-8
   paths-to-match:
     - /api/**
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
