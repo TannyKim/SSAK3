@@ -4,6 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.ssak3.api.category.dto.response.CustomCategoryResponse;
+import org.ssak3.api.category.entity.CustomCategory;
+import org.ssak3.api.category.entity.OriginCategory;
+import org.ssak3.api.category.repository.CustomCategoryRepository;
+import org.ssak3.api.category.repository.OriginCategoryRepository;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
 import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Ledger;
@@ -14,6 +19,7 @@ import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.ThemeRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,6 +30,8 @@ public class LedgerService {
     private final LedgerRepository ledgerRepository;
     private final RecordRepository recordRepository;
     private final ThemeRepository themeRepository;
+    private final CustomCategoryRepository customCategoryRepository;
+    private final OriginCategoryRepository originCategoryRepository;
 
     /**
      * 테마 목록 조회
@@ -51,7 +59,13 @@ public class LedgerService {
      * @return
      */
     public Ledger addLedger(Ledger ledger) {
-        return ledgerRepository.save(ledger);
+        Ledger newLedger = ledgerRepository.save(ledger);
+        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(newLedger.getTheme().getThemeId());
+        List<CustomCategory> customCategoryList = originCategoryList.stream()
+                .map(originCategory -> { return new CustomCategory(newLedger, originCategory.getOriginCategoryName()); })
+                .collect(Collectors.toList());
+        customCategoryRepository.saveAll(customCategoryList);
+        return newLedger;
     }
 
     /**

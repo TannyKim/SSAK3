@@ -9,7 +9,8 @@ import org.ssak3.api.ledger.entity.Ledger;
 @Entity
 @Table(name="CUSTOM_CATEGORY")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class CustomCategory {
 
     @Id
@@ -17,7 +18,7 @@ public class CustomCategory {
     @Column(name="CUSTOM_CATEGORY_ID", columnDefinition="BIGINT UNSIGNED")
     private Long customCategoryId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "LEDGER_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Ledger ledger;

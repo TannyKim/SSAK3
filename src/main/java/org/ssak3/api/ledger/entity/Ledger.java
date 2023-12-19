@@ -12,7 +12,7 @@ import org.ssak3.api.user.entity.User;
 @Table(name = "LEDGER")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Ledger {
 
     @Id
@@ -20,11 +20,11 @@ public class Ledger {
     @Column(name = "LEDGER_ID", columnDefinition = "BIGINT UNSIGNED")
     private Long ledgerId; // 가계부 아이디
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
