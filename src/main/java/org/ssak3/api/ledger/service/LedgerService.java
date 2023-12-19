@@ -4,16 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.ssak3.api.category.dto.response.CustomCategoryResponse;
 import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.entity.OriginCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.category.repository.OriginCategoryRepository;
-import org.ssak3.api.ledger.dto.request.RecordRequest;
+import org.ssak3.api.ledger.dto.response.PreMonthExpenseResponse;
 import org.ssak3.api.ledger.entity.Ledger;
-import org.ssak3.api.ledger.entity.Record;
+import org.ssak3.api.ledger.entity.MyData;
 import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.repository.LedgerRepository;
+import org.ssak3.api.ledger.repository.MyDataRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.ThemeRepository;
 
@@ -29,6 +29,7 @@ public class LedgerService {
     private final LedgerRepository ledgerRepository;
     private final RecordRepository recordRepository;
     private final ThemeRepository themeRepository;
+    private final MyDataRepository myDataRepository;
     private final CustomCategoryRepository customCategoryRepository;
     private final OriginCategoryRepository originCategoryRepository;
 
@@ -44,11 +45,18 @@ public class LedgerService {
     /**
      * 테마별 결제내역 조회
      *
-     * @param recordRequest
+     * @param themeId
      * @return
      */
-    public List<Record> findRecordList(RecordRequest recordRequest) {
-        return recordRepository.findAllByUserIdAndThemeIdAndYearMonth(recordRequest);
+    public PreMonthExpenseResponse findPreMonthExpense(Long themeId, String yearMonth) {
+        List<MyData> myDataList = myDataRepository.findByThemeThemeIdAndTranYmd(themeId, yearMonth);
+        int expense = 0;
+        for (MyData myData : myDataList) {
+            expense += myData.getTranAmount();
+        }
+        PreMonthExpenseResponse preMonthExpenseResponse = new PreMonthExpenseResponse(themeId, expense);
+        return preMonthExpenseResponse;
+//        return recordRepository.findAllByUserIdAndThemeIdAndYearMonth(recordRequest);
     }
 
     /**
