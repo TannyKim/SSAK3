@@ -10,7 +10,6 @@ import org.ssak3.api.category.entity.OriginCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.category.repository.OriginCategoryRepository;
 import org.ssak3.api.ledger.dto.request.RecordRequest;
-import org.ssak3.api.ledger.dto.response.RecordResponse;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.entity.Theme;
