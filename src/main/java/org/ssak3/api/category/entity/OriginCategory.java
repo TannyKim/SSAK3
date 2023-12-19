@@ -20,4 +20,7 @@ public class OriginCategory {
     @ManyToOne
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
+
+    @Column(name = "ORIGIN_CATEGORY_NAME", columnDefinition = "VARCHAR(100)")
+    private String originCategoryName;
 }
