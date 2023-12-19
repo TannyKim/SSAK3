@@ -1,10 +1,7 @@
 package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.ssak3.api.user.entity.User;
 
 
@@ -29,7 +26,7 @@ public class Ledger {
     private Theme theme;
 
     @Column(name = "GOAL", columnDefinition = "VARCHAR(100)")
-    private String goal; // 목표 (가계부 제목)
+    private String goal; // 가계부 목표(제목)
 
     @Column(name = "MONTH_BUDGET", columnDefinition = "BIGINT UNSIGNED")
     private Long monthBudget; // 월 예산

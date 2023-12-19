@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.ssak3.api.ledger.dto.request.LedgerEditRequest;
 import org.ssak3.api.ledger.dto.response.PreMonthExpenseResponse;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.entity.Theme;
@@ -99,16 +100,17 @@ public class LedgerController {
     /**
      * 기존 가계부 편집
      *
-     * @param ledger
+     * @param ledgerEditRequest
      * @return
      */
     @Operation(summary = "가계부 편집", description = "기존 가계부를 편집합니다.")
     @PostMapping("/modify")
-    public ResponseEntity<?> ledgerModify(@Valid @RequestBody Ledger ledger) {
+    public ResponseEntity<?> ledgerModify(@Valid @RequestBody LedgerEditRequest ledgerEditRequest) {
 
+        Ledger ledger;
         try {
             log.info("start update my ledger");
-            ledger = ledgerService.modifyLedger(ledger);
+            ledger = ledgerService.modifyLedger(ledgerEditRequest);
         } catch (Exception e) {
             log.error("error", e);
             throw new RuntimeException(e);

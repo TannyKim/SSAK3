@@ -9,6 +9,7 @@ import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.entity.OriginCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.category.repository.OriginCategoryRepository;
+import org.ssak3.api.ledger.dto.request.LedgerEditRequest;
 import org.ssak3.api.ledger.dto.response.PreMonthExpenseResponse;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.entity.MyData;
@@ -114,10 +115,14 @@ public class LedgerService {
     /**
      * 기존 가계부 편집
      *
-     * @param ledger
+     * @param ledgerEditRequest
      * @return
      */
-    public Ledger modifyLedger(Ledger ledger) {
+    public Ledger modifyLedger(LedgerEditRequest ledgerEditRequest) {
+        Ledger ledger = ledgerRepository.findByLedgerId(ledgerEditRequest.getLedgerId());
+        ledger.setGoal(ledgerEditRequest.getGoal());
+        ledger.setMonthBudget(ledger.getMonthBudget());
+        ledger.setIsPublic(ledger.getIsPublic());
         return ledgerRepository.save(ledger);
     }
 
