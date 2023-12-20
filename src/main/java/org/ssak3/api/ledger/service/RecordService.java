@@ -41,20 +41,20 @@ public class RecordService {
      */
     public Record addRecord(RecordAddRequest recordAddRequest) {
 
-        // Check if the CustomCategory is New
+        // Check if the CustomCategory is new
         Long ledgerId = recordAddRequest.getLedgerId();
         String categoryName = recordAddRequest.getCategoryName();
-        CustomCategory newCategory = new CustomCategory(new Ledger(ledgerId), categoryName);
-        CustomCategory category = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(newCategory);
-        if (category == null){
-            // INSERT New CustomCategory
-            category = customCategoryRepository.save(newCategory);
+        Ledger ledger = ledgerRepository.findByLedgerId(ledgerId);
+        CustomCategory reqCategory = new CustomCategory(ledger, categoryName);
+        CustomCategory resCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(reqCategory);
+        if (resCategory == null){
+            // INSERT new CustomCategory
+            resCategory = customCategoryRepository.save(reqCategory);
         }
-        System.out.println(category.toString());
 
-        // INSERT New Record
-        Record record = new Record(new Ledger(ledgerId), new Theme(recordAddRequest.getThemeId()), new CustomCategory(category.getCustomCategoryId()));
-        record.setCategoryName(category.getCustomCategoryName());
+        // INSERT new Record
+        Record record = new Record(ledger, ledger.getTheme(), resCategory);
+        record.setCategoryName(categoryName);
         record.setTranName(recordAddRequest.getTranName());
         record.setTranAmount(recordAddRequest.getTranAmount());
         record.setTranYmd(recordAddRequest.getTranYmd());
@@ -64,8 +64,7 @@ public class RecordService {
         record.setReceiptUrl(recordAddRequest.getReceiptUrl());
         record = recordRepository.save(record);
 
-        // UPDATE MonthExpense in the Ledger
-        Ledger ledger = ledgerRepository.findByLedgerId(ledgerId);
+        // UPDATE monthExpense in the Ledger
         Long monthExpense = ledger.getMonthExpense() == null ? 0 : ledger.getMonthExpense();
         ledger.setMonthExpense(monthExpense + record.getTranAmount());
         ledger = ledgerRepository.save(ledger);
@@ -73,20 +72,49 @@ public class RecordService {
         return record;
     }
 
+    /**
+     * 가계부 내역 수정
+     * @param recordEditRequest
+     * @return
+     */
     public RecordEditResponse modifyRecord(RecordEditRequest recordEditRequest) {
+
+        // Check if the CustomCategory is new
         Long recordId = recordEditRequest.getRecordId();
-        CustomCategory customCategory = customCategoryRepository.findByCustomCategoryId(recordEditRequest.getCategoryId());
-        Record currRecord = recordRepository.findByRecordId(recordId);
+        Record record = recordRepository.findByRecordId(recordId);
+        Long ledgerId = record.getLedger().getLedgerId();
+        Ledger ledger = ledgerRepository.findByLedgerId(ledgerId);
 
-        currRecord.setCustomCategory(customCategory);
-        currRecord.setCategoryName(recordEditRequest.getCategoryName());
-        currRecord.setTranAmount(recordEditRequest.getTranAmount());
-        currRecord.setTranName(recordEditRequest.getTranName());
+        String categoryName = recordEditRequest.getCategoryName();
+        CustomCategory reqCategory = new CustomCategory(ledger, categoryName);
+        CustomCategory resCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(reqCategory);
+        if (resCategory == null){
+            // INSERT new CustomCategory
+            resCategory = customCategoryRepository.save(reqCategory);
+        }
 
-        Record save = recordRepository.save(currRecord);
-        return new RecordEditResponse(save);
+        // UPDATE monthExpense in the Ledger
+        Long monthExpense = ledger.getMonthExpense() == null ? 0 : ledger.getMonthExpense();
+        Integer oldTranAmount = recordRepository.findByRecordId(recordId).getTranAmount();
+        Integer newTranAmount = recordEditRequest.getTranAmount();
+        ledger.setMonthExpense(monthExpense - oldTranAmount + newTranAmount);
+        Ledger updatedLedger = ledgerRepository.save(ledger);
+
+        // UPDATE the Record
+        record.setLedger(ledger);
+        record.setCustomCategory(resCategory);
+        record.setCategoryName(categoryName);
+        record.setTranAmount(recordEditRequest.getTranAmount());
+        record.setTranName(recordEditRequest.getTranName());
+        Record updatedRecord = recordRepository.save(record);
+
+        return new RecordEditResponse(updatedRecord);
     }
 
+    /**
+     * 가계부 내역 삭제
+     * @param recordId
+     */
     @Transactional
     public void deleteRecord(Long recordId) {
         recordRepository.deleteByRecordId(recordId);

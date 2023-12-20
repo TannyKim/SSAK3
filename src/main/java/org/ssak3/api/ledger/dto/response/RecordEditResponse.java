@@ -33,6 +33,9 @@ public class RecordEditResponse {
     @Schema(description = "isExpense", example = "1")
     String isExpense;
 
+    @Schema(description = "receiptUrl", example = "")
+    String receiptUrl;
+
     public RecordEditResponse(Record record) {
         this.recordId = record.getRecordId();
         this.categoryName = record.getCategoryName();
@@ -42,5 +45,6 @@ public class RecordEditResponse {
         this.tranName = record.getTranName();
         this.tranYmd = record.getTranYmd();
         this.tranTime = record.getTranTime();
+        this.receiptUrl = record.getReceiptUrl();
     }
 }

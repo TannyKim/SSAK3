@@ -3,17 +3,15 @@ package org.ssak3.api.ledger.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
-@NoArgsConstructor
 public class RecordAddRequest {
 
     @Schema(description = "ledger id", example = "1")
     Long ledgerId; // 가계부 아이디
-
-    @Schema(description = "theme id", example = "1")
-    Long themeId; // 테마 아이디
 
     @Schema(description = "category name", example = "교통")
     String categoryName; // 카테고리명
@@ -36,6 +34,6 @@ public class RecordAddRequest {
     @Schema(description = "income or expense", example = "1")
     String isExpense; // 수입 or 지출
 
-    @Schema(description = "tranAmount", example = "10000")
+    @Schema(description = "receipt image url", example = "10000")
     String receiptUrl; // 영수증 URL
 }
