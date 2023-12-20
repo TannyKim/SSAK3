@@ -42,18 +42,18 @@ spring:
       pathmatch:
         matching-strategy: ant_path_matcher
 
-    cloud:
-      aws:
-        s3:
-          bucket: ssak3
-        credentials:
-          access-key: AKIAZL4TEKTNBS6FS4FH
-          secret-key: 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
-        region:
-          static: ap-northeast-2
-          auto: false
-        stack:
-          auto: false
+cloud:
+  aws:
+    s3:
+      bucket: ssak3
+    credentials:
+      access-key: AKIAZL4TEKTNMIVJY4WL
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
 
 logging.level:
   org.hibernate.SQL: debug
