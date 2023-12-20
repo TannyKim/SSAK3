@@ -2,7 +2,6 @@ package org.ssak3.api.ledger.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 public class RecordEditRequest {
@@ -19,6 +18,4 @@ public class RecordEditRequest {
     @Schema(description = "transaction amount", example = "10000")
     Integer tranAmount; // 거래금액
 
-    @Schema(description = "receipt image url", example = "10000")
-    String receiptUrl; // 영수증 URL
 }

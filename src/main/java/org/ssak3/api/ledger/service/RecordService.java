@@ -110,7 +110,6 @@ public class RecordService {
         record.setTranAmount(recordEditRequest.getTranAmount());
         record.setTranName(recordEditRequest.getTranName());
         Record updatedRecord = recordRepository.save(record);
-        record.setReceiptUrl(recordEditRequest.getReceiptUrl());
 
         return new RecordEditResponse(updatedRecord);
     }
@@ -124,6 +123,10 @@ public class RecordService {
     }
 
     public String addRecordReceipt(@Valid Long recordId, MultipartFile image) throws IOException {
-        return s3Uploader.upload(image, String.valueOf(recordId));
+        String upload = s3Uploader.upload(image, String.valueOf(recordId));
+        Record record = recordRepository.findByRecordId(recordId);
+        record.setReceiptUrl(upload);
+        recordRepository.save(record);
+        return upload;
     }
 }

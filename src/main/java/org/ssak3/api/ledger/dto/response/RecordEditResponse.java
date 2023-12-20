@@ -33,9 +33,6 @@ public class RecordEditResponse {
     @Schema(description = "isExpense", example = "1")
     String isExpense;
 
-    @Schema(description = "receiptUrl", example = "https://ssak3.s3.ap-northeast-2.amazonaws.com/images/1-Screenshot_20220422183600.jpg")
-    String receiptUrl;
-
     public RecordEditResponse(Record record) {
         this.recordId = record.getRecordId();
         this.categoryName = record.getCategoryName();
@@ -47,4 +44,7 @@ public class RecordEditResponse {
         this.tranTime = record.getTranTime();
         this.receiptUrl = record.getReceiptUrl();
     }
+
+    @Schema(description = "receiptUrl", example = "https://ssak3.s3.ap-northeast-2.amazonaws.com/images/1-Screenshot_20220422183600.jpg")
+    String receiptUrl;
 }
