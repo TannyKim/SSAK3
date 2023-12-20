@@ -103,7 +103,7 @@ tasks.named('test') {
 //}
 //
 bootJar {
-    archivesBaseName = 'don-give-up'
-    archiveFileName = 'don-give-up.jar'
+    archivesBaseName = 'dont-give-up'
+    archiveFileName = 'dont-give-up.jar'
     archiveVersion = "0.0.0"
 }
