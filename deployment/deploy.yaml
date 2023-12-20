@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dont-give-up
-          image: docker.io/ktking813/dont-give-up:latest
+          image: docker.io/ktking813/don-give-up:latest
           imagePullPolicy: Always
           env:
             - name: PORT
