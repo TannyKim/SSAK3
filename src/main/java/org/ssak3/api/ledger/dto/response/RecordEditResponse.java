@@ -33,7 +33,7 @@ public class RecordEditResponse {
     @Schema(description = "isExpense", example = "1")
     String isExpense;
 
-    @Schema(description = "receiptUrl", example = "")
+    @Schema(description = "receiptUrl", example = "https://ssak3.s3.ap-northeast-2.amazonaws.com/images/1-Screenshot_20220422183600.jpg")
     String receiptUrl;
 
     public RecordEditResponse(Record record) {
