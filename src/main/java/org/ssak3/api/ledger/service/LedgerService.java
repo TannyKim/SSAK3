@@ -2,6 +2,7 @@ package org.ssak3.api.ledger.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ssak3.api.category.dto.response.CustomCategoryResponse;
@@ -20,6 +21,8 @@ import org.ssak3.api.ledger.repository.MyDataRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.ThemeRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,9 +49,9 @@ public class LedgerService {
     }
 
     /**
-     * 테마별 결제내역 조회
-     *
+     * 전월 지출 합산 금액 조회
      * @param themeId
+     * @param yearMonth
      * @return
      */
     public PreMonthExpenseResponse findPreMonthExpense(long themeId, String yearMonth) {
@@ -71,9 +74,10 @@ public class LedgerService {
      * @return
      */
     public Ledger addLedger(Ledger ledger) {
-        // Create New Ledger
+        // INSERT new Ledger
         Ledger newLedger = ledgerRepository.save(ledger);
 
+        // Get new Ledger's themeId
         Long themeId = newLedger.getTheme().getThemeId();
 
         // OriginCategory -> CustomCategory
@@ -91,12 +95,10 @@ public class LedgerService {
             myDataList = myDataRepository.findAllByThemeThemeId(themeId);
         }
         CustomCategory customCategory = customCategoryRepository.findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(newLedger.getLedgerId()).get(0);
+        int[] monthExpense = {0};
         List<Record> recordList = myDataList.stream()
                 .map(myData -> {
-                    Record record = new Record();
-                    record.setLedger(newLedger); // 가계부
-                    record.setTheme(myData.getTheme()); // 테마
-                    record.setCustomCategory(customCategory); // 카테고리
+                    Record record = new Record(newLedger, myData.getTheme(), customCategory);
                     record.setCategoryName(customCategory.getCustomCategoryName()); // 카테고리명
                     record.setTranName(myData.getTranPlace()); // 거래명
                     record.setTranAmount(myData.getTranAmount()); // 거래금액
@@ -104,12 +106,23 @@ public class LedgerService {
                     record.setTranTime(myData.getTranTime()); // 거래시각
                     record.setTranPlace(myData.getTranPlace()); // 상호명
                     record.setIsExpense(myData.getIsExpense()); // 지출 or 수입
+
+                    // Get total expense for this month
+                    if (myData.getIsExpense().equals("1")){
+                        LocalDate tranYearMonth = LocalDate.parse(myData.getTranYmd(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        LocalDate thisYearMonth = LocalDate.now();
+                        if (tranYearMonth.getYear() == thisYearMonth.getYear() && tranYearMonth.getMonth() == thisYearMonth.getMonth()) {
+                            monthExpense[0] += myData.getTranAmount();
+                        }
+                    }
                     return record;
                 })
                 .collect(Collectors.toList());
         recordRepository.saveAll(recordList);
 
-        return newLedger;
+        // UPDATE new Ledger's monthExpense
+        newLedger.setMonthExpense(Long.valueOf(monthExpense[0]));
+        return ledgerRepository.save(newLedger);
     }
 
     /**
