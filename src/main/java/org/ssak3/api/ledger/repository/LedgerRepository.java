@@ -1,6 +1,7 @@
 package org.ssak3.api.ledger.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.ssak3.api.ledger.entity.Ledger;
@@ -26,4 +27,11 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long> {
     List<Ledger> findAllByUserUserId(Long userId);
 
     Ledger findByLedgerId(Long ledgerId);
+
+    /**
+     * 매달 1일 00시 00분 00초에 모든 Ledger의 monthExpense를 0으로 초기화
+     */
+    @Modifying
+    @Query("UPDATE Ledger l SET l.monthExpense = 0")
+    void initMonthExpense();
 }
