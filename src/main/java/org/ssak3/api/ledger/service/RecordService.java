@@ -1,5 +1,6 @@
 package org.ssak3.api.ledger.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import org.ssak3.api.ledger.dto.request.RecordListRequest;
 import org.ssak3.api.ledger.dto.response.RecordEditResponse;
 import org.ssak3.api.ledger.entity.Ledger;
 import org.ssak3.api.ledger.entity.Record;
-import org.ssak3.api.ledger.entity.Theme;
 import org.ssak3.api.ledger.repository.LedgerRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
@@ -80,7 +80,7 @@ public class RecordService {
      * @param recordEditRequest
      * @return
      */
-    public RecordEditResponse modifyRecord(RecordEditRequest recordEditRequest, MultipartFile image) throws IOException {
+    public RecordEditResponse modifyRecord(RecordEditRequest recordEditRequest) throws IOException {
 
         // Check if the CustomCategory is new
         Long recordId = recordEditRequest.getRecordId();
@@ -110,10 +110,7 @@ public class RecordService {
         record.setTranAmount(recordEditRequest.getTranAmount());
         record.setTranName(recordEditRequest.getTranName());
         Record updatedRecord = recordRepository.save(record);
-        if(!image.isEmpty()) {
-            String storedFileName = s3Uploader.upload(image, String.valueOf(recordId));
-            record.setReceiptUrl(storedFileName);
-        }
+        record.setReceiptUrl(recordEditRequest.getReceiptUrl());
 
         return new RecordEditResponse(updatedRecord);
     }
@@ -126,4 +123,7 @@ public class RecordService {
         recordRepository.deleteByRecordId(recordId);
     }
 
+    public String addRecordReceipt(@Valid Long recordId, MultipartFile image) throws IOException {
+        return s3Uploader.upload(image, String.valueOf(recordId));
+    }
 }

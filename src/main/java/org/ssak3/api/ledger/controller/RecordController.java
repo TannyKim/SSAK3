@@ -62,10 +62,23 @@ public class RecordController {
                     array = @ArraySchema(schema = @Schema(implementation = RecordEditResponse.class)))),
             @ApiResponse(responseCode = "404", description = "가계부 내역 수정 실패")
     })
-    @PostMapping(value = "/edit", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<?> recordEdit(@Valid @RequestPart(value = "request") RecordEditRequest recordEditRequest, @RequestPart(value = "image") MultipartFile image) throws IOException {
-        RecordEditResponse response = recordService.modifyRecord(recordEditRequest, image);
+    public ResponseEntity<?> recordEdit(@Valid @RequestBody RecordEditRequest recordEditRequest) throws IOException {
+        RecordEditResponse response = recordService.modifyRecord(recordEditRequest);
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @Operation(summary = "가계부 내역 영수증 등록", description = "가계부 내역의 영수증을 등록합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "가계부 내역 영수증 등록 성공"),
+            @ApiResponse(responseCode = "404", description = "가계부 내역 영수증 등록 실패 실패")
+    })
+    @PostMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Transactional
+    public ResponseEntity<?> recordReceiptAdd(@Valid @RequestPart(value = "recordId") Long recordId, @RequestPart(value = "image") MultipartFile image) throws IOException {
+        String response = recordService.addRecordReceipt(recordId, image);
+//        RecordEditResponse response = recordService.modifyRecord(recordEditRequest, image);
         return ResponseEntity.status(200).body(response);
     }
 
