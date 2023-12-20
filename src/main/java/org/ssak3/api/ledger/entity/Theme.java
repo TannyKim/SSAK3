@@ -1,13 +1,13 @@
 package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.ssak3.api.category.entity.CustomCategory;
 
 @Entity
 @Table(name="THEME")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Theme {
 
@@ -18,5 +18,11 @@ public class Theme {
 
     @Column(name = "THEME_NAME")
     private String themeName;
+
+    @Builder
+    public Theme(
+            Long themeId) {
+        this.themeId = themeId;
+    }
 
 }

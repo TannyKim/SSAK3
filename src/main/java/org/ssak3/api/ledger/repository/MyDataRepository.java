@@ -11,7 +11,7 @@ import java.util.List;
 public interface MyDataRepository extends JpaRepository<MyData, Long> {
 
     @Query("SELECT m FROM MyData m WHERE m.theme.themeId = :#{#themeId} AND m.tranYmd LIKE :#{#yearMonth}%")
-    List<MyData> findByThemeThemeIdAndTranYmd(long themeId, String yearMonth);
+    List<MyData> findByThemeThemeIdAndTranYmd(Long themeId, String yearMonth);
 
     @Query("SELECT m FROM MyData m WHERE m.tranYmd LIKE :#{#yearMonth}%")
     List<MyData> findByTranYmd(String yearMonth);
