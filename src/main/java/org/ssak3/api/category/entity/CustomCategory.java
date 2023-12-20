@@ -27,7 +27,7 @@ public class CustomCategory {
     @Column(name = "CUSTOM_CATEGORY_NAME")
     private String customCategoryName;
 
-    @Builder
+
     public CustomCategory(
             Ledger ledger,
             String customCategoryName
