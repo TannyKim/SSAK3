@@ -26,7 +26,7 @@ public class CategoryService {
     }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void removeCategory(Long categoryId) {
         categoryRepository.deleteByCustomCategoryId(categoryId);
     }
