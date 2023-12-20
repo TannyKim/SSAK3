@@ -75,9 +75,9 @@ public class RecordController {
             @ApiResponse(responseCode = "404", description = "가계부 내역 영수증 등록 실패 실패")
     })
     @PostMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> recordReceiptAdd(@Valid @RequestParam(value = "recordId") Long recordId, @RequestPart(value = "image") MultipartFile image) throws IOException {
-        String response = recordService.addRecordReceipt(recordId, image);
-//        RecordEditResponse response = recordService.modifyRecord(recordEditRequest, image);
+    public ResponseEntity<?> recordReceiptAdd(@Valid @RequestPart("recordId") Long recordId, @RequestPart("image")MultipartFile multipartFile) throws IOException {
+//        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), receiptAddRequest.getImage());
+        String response = recordService.addRecordReceipt(recordId, multipartFile);
         return ResponseEntity.status(200).body(response);
     }
 
