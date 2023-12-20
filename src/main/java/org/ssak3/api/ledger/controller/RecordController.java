@@ -10,8 +10,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.ssak3.api.ledger.dto.request.RecordAddRequest;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
@@ -21,6 +24,7 @@ import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
 import org.ssak3.api.ledger.service.RecordService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Ledger REST API", description = "Ledger REST API입니다.")
@@ -54,13 +58,14 @@ public class RecordController {
 
     @Operation(summary = "가계부 내역 수정", description = "가계부 내역을 수정합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "가계부 내역 수정 성공", content = @Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "가계부 내역 수정 성공", content = @Content(
                     array = @ArraySchema(schema = @Schema(implementation = RecordEditResponse.class)))),
             @ApiResponse(responseCode = "404", description = "가계부 내역 수정 실패")
     })
-    @PostMapping("/edit")
-    public ResponseEntity<?> recordEdit(@Valid @RequestBody RecordEditRequest recordListRequest) {
-        RecordEditResponse response = recordService.modifyRecord(recordListRequest);
+    @PostMapping(value = "/edit", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Transactional
+    public ResponseEntity<?> recordEdit(@Valid @RequestPart(value = "request") RecordEditRequest recordEditRequest, @RequestPart(value = "image") MultipartFile image) throws IOException {
+        RecordEditResponse response = recordService.modifyRecord(recordEditRequest, image);
         return ResponseEntity.status(200).body(response);
     }
 
