@@ -13,7 +13,7 @@ import lombok.Setter;
 public class PreMonthExpenseResponse {
 
     @Schema(description = "theme")
-    long themeId;
+    Long themeId;
 
     @Schema(description = "month expense")
     Integer monthExpense; // 월 지출 합산 금액

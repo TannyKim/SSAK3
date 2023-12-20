@@ -5,23 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class RecordEditRequest {
 
     @Schema(description = "record id", example = "1")
-    Long recordId;
+    Long recordId; // 가계부 내역 아이디
 
-    @Schema(description = "categoryId", example = "1")
-    Long categoryId;
+    @Schema(description = "category name", example = "교통")
+    String categoryName; // 카테고리명
 
-    @Schema(description = "categoryName", example = "교통")
-    String categoryName;
-
-    @Schema(description = "tranName", example = "홈플러스에서 계란 한판 샀다")
+    @Schema(description = "transaction name", example = "홈플러스에서 계란 한판 샀다")
     private String tranName; // 거래명
 
-    @Schema(description = "tranAmount", example = "10000")
-    int tranAmount;
+    @Schema(description = "transaction amount", example = "10000")
+    Integer tranAmount; // 거래금액
 
-
+    @Schema(description = "receipt image url", example = "10000")
+    String receiptUrl; // 영수증 URL
 }
