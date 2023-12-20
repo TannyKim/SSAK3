@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dont-give-up
-          image: docker.io/ohcm0013/dont-give-up:latest
+          image: docker.io/ohcm0013/dont-give-up:1.0.0
           imagePullPolicy: Always
           env:
             - name: PORT
