@@ -12,10 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.ssak3.api.ledger.dto.request.RecordAddRequest;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
 import org.ssak3.api.ledger.dto.request.RecordListRequest;
 import org.ssak3.api.ledger.dto.response.RecordEditResponse;
 import org.ssak3.api.ledger.dto.response.RecordListResponse;
+import org.ssak3.api.ledger.entity.Record;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
 import org.ssak3.api.ledger.service.RecordService;
 
@@ -41,6 +43,13 @@ public class RecordController {
         List<RecordMapping> allRecordByYearAndMonth = recordService.findAllRecordByYearAndMonth(recordListRequest);
         RecordListResponse recordListResponse = new RecordListResponse(allRecordByYearAndMonth);
         return ResponseEntity.status(200).body(recordListResponse);
+    }
+
+    @Operation(summary = "가계부 내역 추가", description = "가계부 내역을 수동으로 추가합니다.")
+    @PostMapping("/add")
+    public ResponseEntity<?> recordAdd(@Valid @RequestBody RecordAddRequest recordAddRequest) {
+        Record record = recordService.addRecord(recordAddRequest);
+        return ResponseEntity.status(200).body(record);
     }
 
     @Operation(summary = "가계부 내역 수정", description = "가계부 내역을 수정합니다.")

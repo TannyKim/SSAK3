@@ -37,4 +37,10 @@ public class Ledger {
     @Column(name = "IS_PUBLIC", columnDefinition = "CHAR(1)")
     private String isPublic; // 가계부 공개여부
 
+    @Builder
+    public Ledger(
+            Long ledgerId
+    ){
+        this.ledgerId = ledgerId;
+    }
 }

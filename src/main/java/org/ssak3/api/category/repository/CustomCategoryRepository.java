@@ -22,6 +22,9 @@ public interface CustomCategoryRepository extends JpaRepository<CustomCategory, 
      * @param ledgerId
      * @return
      */
-    @Query("SELECT c FROM CustomCategory c WHERE c.ledger.ledgerId != :ledgerId ORDER BY c.customCategoryId ASC")
+    @Query("SELECT c FROM CustomCategory c WHERE c.ledger.ledgerId != :#{#ledgerId} ORDER BY c.customCategoryId ASC")
     List<CustomCategory> findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(Long ledgerId);
+
+    @Query("SELECT c FROM CustomCategory c WHERE c.ledger.ledgerId = :#{#customCategory.ledger.ledgerId} AND c.customCategoryName = :#{#customCategory.customCategoryName}")
+    CustomCategory findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(CustomCategory customCategory);
 }

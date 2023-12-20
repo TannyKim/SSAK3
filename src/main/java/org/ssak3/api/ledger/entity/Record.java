@@ -1,6 +1,7 @@
 package org.ssak3.api.ledger.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,7 +42,7 @@ public class Record {
     private String tranName; // 거래명
 
     @Column(name = "TRAN_AMOUNT", columnDefinition = "INT UNSIGNED")
-    private int tranAmount; // 거래금액
+    private Integer tranAmount; // 거래금액
 
     @Column(name = "TRAN_YMD", columnDefinition = "VARCHAR(50)")
     private String tranYmd; // 거래년월일
@@ -54,4 +55,17 @@ public class Record {
 
     @Column(name = "IS_EXPENSE", columnDefinition = "VARCHAR(1)")
     private String isExpense; // 지출 or 수입
+
+    @Column(name = "RECEIPT_URL", columnDefinition = "VARCHAR(1000)")
+    private String receiptUrl; // 영수증 URL
+
+    @Builder
+    public Record(
+            Ledger ledger,
+            Theme theme,
+            CustomCategory customCategory) {
+        this.ledger = ledger;
+        this.theme = theme;
+        this.customCategory = customCategory;
+    }
 }
