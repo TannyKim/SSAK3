@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.ssak3.api.user.dto.response.UserResponse;
@@ -14,6 +15,7 @@ import org.ssak3.api.user.entity.User;
 import org.ssak3.api.user.service.UserService;
 
 @Tag(name="User REST API", description = "User REST API입니다.")
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")

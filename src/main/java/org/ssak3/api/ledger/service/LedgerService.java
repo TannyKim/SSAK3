@@ -166,4 +166,9 @@ public class LedgerService {
         return ledgerRepository.findOthersLedgerList(userId);
     }
 
+    /**
+     * 매달 1일 00시 00분 00초에 모든 Ledger의 monthExpense를 0으로 초기화
+     */
+    public void initMonthExpense() { ledgerRepository.initMonthExpense(); }
+
 }

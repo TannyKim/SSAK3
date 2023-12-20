@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.service.CategoryService;
 
 @Tag(name="Category REST API", description = "Category REST API입니다.")
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
