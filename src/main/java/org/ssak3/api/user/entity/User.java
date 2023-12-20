@@ -33,8 +33,8 @@ public class User {
     public User(
             String kbPIN,
             String userName,
-            int age,
-            long income
+            Integer age,
+            Long income
     ){
         this.kbPIN = kbPIN;
         this.userName = userName;

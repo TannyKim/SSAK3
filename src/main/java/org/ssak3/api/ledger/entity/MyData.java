@@ -23,7 +23,7 @@ public class MyData {
     private Theme theme;
 
     @Column(name = "TRAN_AMOUNT", columnDefinition = "INT UNSIGNED")
-    private int tranAmount; // 거래금액
+    private Integer tranAmount; // 거래금액
 
     @Column(name = "TRAN_YMD", columnDefinition = "VARCHAR(50)")
     private String tranYmd; // 거래년월일

@@ -50,8 +50,8 @@ public class LedgerController {
 
     /**
      * 전월 지출 합산 금액 조회
-     *
      * @param themeId
+     * @param yearMonth
      * @return
      */
     @Operation(summary = "전월 지출 합산 금액 조회", description = "가계부의 테마를 선택하면 해당 테마의 결제내역을 조회하여 전월 지출을 합산합니다.")
