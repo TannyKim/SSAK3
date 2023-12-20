@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.ssak3.api.category.entity.CustomCategory;
 import org.ssak3.api.category.repository.CustomCategoryRepository;
 import org.ssak3.api.ledger.dto.request.RecordAddRequest;
@@ -17,6 +18,7 @@ import org.ssak3.api.ledger.repository.LedgerRepository;
 import org.ssak3.api.ledger.repository.RecordRepository;
 import org.ssak3.api.ledger.repository.mapping.RecordMapping;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -28,6 +30,7 @@ public class RecordService {
     private final LedgerRepository ledgerRepository;
     private final RecordRepository recordRepository;
     private final CustomCategoryRepository customCategoryRepository;
+    private final S3Uploader s3Uploader;
 
     public List<RecordMapping> findAllRecordByYearAndMonth(RecordListRequest recordListRequest) {
         List<RecordMapping> monthlyRecordByLedgerIdAndYearAndMonth = recordRepository.findMonthlyRecordByLedgerIdAndYearAndMonth(recordListRequest);
@@ -73,10 +76,14 @@ public class RecordService {
         return record;
     }
 
-    public RecordEditResponse modifyRecord(RecordEditRequest recordEditRequest) {
+    public RecordEditResponse modifyRecord(RecordEditRequest recordEditRequest, MultipartFile image) throws IOException {
         Long recordId = recordEditRequest.getRecordId();
         CustomCategory customCategory = customCategoryRepository.findByCustomCategoryId(recordEditRequest.getCategoryId());
         Record currRecord = recordRepository.findByRecordId(recordId);
+        if(!image.isEmpty()) {
+            String storedFileName = s3Uploader.upload(image, String.valueOf(recordEditRequest.getRecordId()));
+            currRecord.setReceiptUrl(storedFileName);
+        }
 
         currRecord.setCustomCategory(customCategory);
         currRecord.setCategoryName(recordEditRequest.getCategoryName());
