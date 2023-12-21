@@ -22,6 +22,9 @@ public class MyData {
     @JoinColumn(name = "THEME_ID")
     private Theme theme;
 
+    @Column(name = "ORIGIN_CATEGORY_ID")
+    private Long originCategoryId;
+
     @Column(name = "TRAN_AMOUNT", columnDefinition = "INT UNSIGNED")
     private Integer tranAmount; // 거래금액
 
