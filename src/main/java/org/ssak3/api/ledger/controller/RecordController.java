@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.ssak3.api.ledger.dto.request.ReceiptAddRequest;
 import org.ssak3.api.ledger.dto.request.RecordAddRequest;
 import org.ssak3.api.ledger.dto.request.RecordEditRequest;
@@ -74,10 +75,10 @@ public class RecordController {
             @ApiResponse(responseCode = "200", description = "가계부 내역 영수증 등록 성공"),
             @ApiResponse(responseCode = "404", description = "가계부 내역 영수증 등록 실패 실패")
     })
-    @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> recordReceiptAdd(@Valid @ModelAttribute ReceiptAddRequest receiptAddRequest) throws IOException {
-        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), receiptAddRequest.getImage());
-//        String response = recordService.addRecordReceipt(recordId, multipartFile);
+    @PostMapping(value = "/upload")
+    public ResponseEntity<?> recordReceiptAdd(@Valid @RequestPart(value = "recordId") ReceiptAddRequest receiptAddRequest, @RequestPart MultipartFile image) throws IOException {
+//        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), receiptAddRequest.getImage());
+        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), image);
         return ResponseEntity.status(200).body(response);
     }
 
