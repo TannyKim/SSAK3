@@ -15,4 +15,7 @@ public interface OriginCategoryRepository extends JpaRepository<OriginCategory, 
      * @return
      */
     List<OriginCategory> findAllByThemeThemeId(Long themeId);
+
+
+    String findByOriginCategoryName(String originCategoryName);
 }

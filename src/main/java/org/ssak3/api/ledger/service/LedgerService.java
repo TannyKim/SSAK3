@@ -81,7 +81,7 @@ public class LedgerService {
         Long themeId = newLedger.getTheme().getThemeId();
 
         // OriginCategory -> CustomCategory
-        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(themeId); // -> findAllByOriginCategoryThemeThemeId()
+        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(themeId);
         List<CustomCategory> customCategoryList = originCategoryList.stream()
                 .map(originCategory -> { return new CustomCategory(newLedger, originCategory.getOriginCategoryName()); })
                 .collect(Collectors.toList());
@@ -94,13 +94,11 @@ public class LedgerService {
         } else {
             myDataList = myDataRepository.findAllByThemeThemeId(themeId);
         }
-//        CustomCategory customCategory = customCategoryRepository.findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(newLedger.getLedgerId()).get(0);
         int[] monthExpense = {0};
         List<Record> recordList = myDataList.stream()
                 .map(myData -> {
-
                     Record record = new Record(newLedger);
-                    record.setTheme(myData.getTheme()); // 테마 - 테마 아이디
+                    record.setTheme(newLedger.getTheme()); // 테마 - 테마 아이디
                     record.setTranName(myData.getTranPlace()); // 거래명
                     record.setTranAmount(myData.getTranAmount()); // 거래금액
                     record.setTranYmd(myData.getTranYmd()); // 거래년월일
@@ -109,8 +107,14 @@ public class LedgerService {
                     record.setIsExpense(myData.getIsExpense()); // 지출 or 수입
 
                     if (myData.getIsExpense().equals("1")){
+                        // Set customCategoryId and customCategoryName
                         OriginCategory originCategory = originCategoryRepository.findById(myData.getOriginCategoryId()).orElseThrow(IllegalArgumentException::new);
-                        CustomCategory customCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(new CustomCategory(newLedger, originCategory.getOriginCategoryName()));
+                        CustomCategory customCategory;
+                        if (themeId == 1) {
+                            customCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(new CustomCategory(newLedger, originCategory.getTheme().getThemeName()));
+                        } else {
+                            customCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(new CustomCategory(newLedger, originCategory.getOriginCategoryName()));
+                        }
                         record.setCustomCategory(customCategory); // 카테고리 - 카테고리 아이디
                         record.setCategoryName(customCategory.getCustomCategoryName()); // 카테고리명
 
