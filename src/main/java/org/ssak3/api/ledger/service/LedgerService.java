@@ -81,7 +81,7 @@ public class LedgerService {
         Long themeId = newLedger.getTheme().getThemeId();
 
         // OriginCategory -> CustomCategory
-        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(themeId);
+        List<OriginCategory> originCategoryList = originCategoryRepository.findAllByThemeThemeId(themeId); // -> findAllByOriginCategoryThemeThemeId()
         List<CustomCategory> customCategoryList = originCategoryList.stream()
                 .map(originCategory -> { return new CustomCategory(newLedger, originCategory.getOriginCategoryName()); })
                 .collect(Collectors.toList());
@@ -94,12 +94,13 @@ public class LedgerService {
         } else {
             myDataList = myDataRepository.findAllByThemeThemeId(themeId);
         }
-        CustomCategory customCategory = customCategoryRepository.findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(newLedger.getLedgerId()).get(0);
+//        CustomCategory customCategory = customCategoryRepository.findAllByLedgerLedgerIdOrderByCustomCategoryIdAsc(newLedger.getLedgerId()).get(0);
         int[] monthExpense = {0};
         List<Record> recordList = myDataList.stream()
                 .map(myData -> {
-                    Record record = new Record(newLedger, myData.getTheme(), customCategory);
-                    record.setCategoryName(customCategory.getCustomCategoryName()); // 카테고리명
+
+                    Record record = new Record(newLedger);
+                    record.setTheme(myData.getTheme()); // 테마 - 테마 아이디
                     record.setTranName(myData.getTranPlace()); // 거래명
                     record.setTranAmount(myData.getTranAmount()); // 거래금액
                     record.setTranYmd(myData.getTranYmd()); // 거래년월일
@@ -107,8 +108,13 @@ public class LedgerService {
                     record.setTranPlace(myData.getTranPlace()); // 상호명
                     record.setIsExpense(myData.getIsExpense()); // 지출 or 수입
 
-                    // Get total expense for this month
                     if (myData.getIsExpense().equals("1")){
+                        OriginCategory originCategory = originCategoryRepository.findById(myData.getOriginCategoryId()).orElseThrow(IllegalArgumentException::new);
+                        CustomCategory customCategory = customCategoryRepository.findByLedgerLedgerIdAndCustomCategoryCustomCategoryName(new CustomCategory(newLedger, originCategory.getOriginCategoryName()));
+                        record.setCustomCategory(customCategory); // 카테고리 - 카테고리 아이디
+                        record.setCategoryName(customCategory.getCustomCategoryName()); // 카테고리명
+
+                        // Get total expense for this month
                         LocalDate tranYearMonth = LocalDate.parse(myData.getTranYmd(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                         LocalDate thisYearMonth = LocalDate.now();
                         if (tranYearMonth.getYear() == thisYearMonth.getYear() && tranYearMonth.getMonth() == thisYearMonth.getMonth()) {

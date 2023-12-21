@@ -123,10 +123,6 @@ public class RecordService {
     }
 
     public String addRecordReceipt(@Valid Long recordId, MultipartFile image) throws IOException {
-        String upload = s3Uploader.upload(image, String.valueOf(recordId));
-        Record record = recordRepository.findByRecordId(recordId);
-        record.setReceiptUrl(upload);
-        recordRepository.save(record);
-        return upload;
+        return s3Uploader.upload(image, String.valueOf(recordId));
     }
 }

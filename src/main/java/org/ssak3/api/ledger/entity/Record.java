@@ -60,6 +60,9 @@ public class Record {
     private String receiptUrl; // 영수증 URL
 
     @Builder
+    public Record(Ledger ledger) { this.ledger = ledger; }
+
+    @Builder
     public Record(
             Ledger ledger,
             Theme theme,
