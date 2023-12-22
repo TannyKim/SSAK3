@@ -127,7 +127,7 @@ public class LedgerController {
      */
     @Operation(summary = "가계부 삭제", description = "기존 가계부를 삭제합니다.")
     @DeleteMapping("/remove")
-    public void ledgerRemove(@Parameter(name = "ledgerId") Long ledgerId) {
+    public void ledgerRemove(@RequestParam("ledgerId") Long ledgerId) {
 
         try {
             log.info("start delete my ledger");

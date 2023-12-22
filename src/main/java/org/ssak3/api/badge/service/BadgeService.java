@@ -26,10 +26,8 @@ public class BadgeService {
      * 전체 배지 목록 조회
      * @return
      */
-    public List<OriginBadge> findOriginBadgeList() {
+    public List<OriginBadge> findBadgeList() {
         return originBadgeRepository.findAll();
     }
-
-
 
 }

@@ -24,17 +24,16 @@ import java.util.List;
 @RequestMapping("/api/v1/ledger")
 public class BadgeController {
 
-    @Autowired
     private final BadgeService badgeService;
 
     @Operation(summary = "전체 배지 목록 조회", description = "전체 배지 목록을 조회합니다.")
     @GetMapping("/badge")
-    public ResponseEntity<List<OriginBadge>> originBadgeList() {
+    public ResponseEntity<List<OriginBadge>> badgeList() {
 
         List<OriginBadge> list;
         try {
-            log.info("start select origin badge list");
-            list = badgeService.findOriginBadgeList();
+            log.info("start select badge list");
+            list = badgeService.findBadgeList();
         } catch (Exception e) {
             log.error("error", e);
             throw new RuntimeException(e);
@@ -45,30 +44,3 @@ public class BadgeController {
     }
 
 }
-
-//@Tag(name = "BADGE REST API", description = "BADGE REST API입니다.")
-//@Slf4j
-//@RestController
-//@RequiredArgsConstructor
-//@RequestMapping("/api/v1/ledger")
-//public class BadgeController {
-//
-//    private final BadgeService badgeService = new BadgeService();
-//
-//    @Operation(summary = "배지 조회", description = "배지 목록을 조회합니다.")
-//    @GetMapping("/badge")
-//    public ResponseEntity<List<OriginBadge>> originBadgeList() {
-//
-//        List<OriginBadge> list;
-//        try {
-//            log.info("start select badge list");
-//            list = badgeService.findAllBadgeList();
-//        } catch (Exception e) {
-//            log.error("error", e);
-//            throw new RuntimeException(e);
-//        }
-//        log.info("badge counts: " + list.size());
-//
-//        return new ResponseEntity<List<OriginBadge>>(list, HttpStatus.OK);
-//    }
-//}

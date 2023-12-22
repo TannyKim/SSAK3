@@ -16,10 +16,6 @@ public class GainedBadge {
     private Long gainedBadgeId; // 획득 배지 아이디
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "ORIGIN_BADGE_ID")
     private OriginBadge originBadge;
 
