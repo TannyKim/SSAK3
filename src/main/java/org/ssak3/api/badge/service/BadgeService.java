@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.ssak3.api.badge.dto.request.BadgeRequest;
 import org.ssak3.api.badge.entity.GainedBadge;
 import org.ssak3.api.badge.entity.OriginBadge;
 import org.ssak3.api.badge.repository.GainedBadgeRepository;
@@ -30,4 +31,14 @@ public class BadgeService {
         return originBadgeRepository.findAll();
     }
 
+    /**
+     * 배지 수정
+     * @param badgeRequest
+     * @return
+     */
+    public OriginBadge modifyBadgeIsFixed(BadgeRequest badgeRequest) {
+        OriginBadge badge = originBadgeRepository.findById(badgeRequest.getBadgeId()).orElseThrow(IllegalArgumentException::new);
+        badge.setIsFixed(badgeRequest.getIsFixed());
+        return originBadgeRepository.save(badge);
+    }
 }

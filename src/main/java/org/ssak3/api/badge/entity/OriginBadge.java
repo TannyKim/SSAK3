@@ -6,6 +6,7 @@ import lombok.*;
 @Entity
 @Table(name="ORIGIN_BADGE")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OriginBadge {
 
