@@ -78,7 +78,8 @@ public class RecordController {
     @PostMapping(value = "/upload")
     public ResponseEntity<?> recordReceiptAdd(@Valid @RequestPart(value = "recordId") ReceiptAddRequest receiptAddRequest, @RequestPart MultipartFile image) throws IOException {
 //        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), receiptAddRequest.getImage());
-        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), image);
+//        String response = recordService.addRecordReceipt(receiptAddRequest.getRecordId(), image);
+        String response = "연휴기간동안 영수증 등록이 중지됩니다.";
         return ResponseEntity.status(200).body(response);
     }
 
