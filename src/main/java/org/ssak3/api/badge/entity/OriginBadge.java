@@ -20,6 +20,9 @@ public class OriginBadge {
     @Column(name="IS_GAINED", columnDefinition = "VARCHAR(1)")
     private String isGained; // 배지 획득 여부
 
+    @Column(name="IS_FIXED", columnDefinition = "VARCHAR(1)")
+    private String isFixed; // 배지 부착 여부
+
 //    @Embedded
 //    @AttributeOverrides({
 //            @AttributeOverride(name = "right", column = @Column(name = "RIGHT_POSITION")),
