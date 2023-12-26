@@ -47,8 +47,8 @@ cloud:
     s3:
       bucket: ssak3
     credentials:
-      access-key: AKIAZL4TEKTNMIVJY4WL
-      secret-key: 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
+      access-key: 
+      secret-key:
     region:
       static: ap-northeast-2
       auto: false
